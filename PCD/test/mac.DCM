@@ -1,0 +1,147 @@
+go da
+sw tcfe10
+def_sys co  c ti al v w
+rej ph graph
+get
+app mobfe5
+def_sys co c ti al v w
+get
+
+@@go gibbs
+@@read g
+
+go d-m
+s-cond glob t 0 1273; * N
+ent-region ti64
+
+ent-grid ti64 1.6e-3 r-p-b-p 71 grid.DAT
+
+@@en-ph ACTIVE ti64 mat  liquid
+en-ph ACTIVE ti64 mat  fcc_a1#1
+en-ph ACTIVE ti64 sph  bcc_a2#1 
+@@en-ph ACTIVE ti64 sph  bcc_a2#2 
+@@en-ph ACTIVE ti64 sph  hcp_a3#1
+@@en-ph ACTIVE ti64 sph  fcc_a1#2
+en-ph active ti64 sph  DIAMOND_a4
+@@en-ph active ti64 sph  mc_shp 
+@@en-ph active ti64 sph  G_PHASE#1
+@@en-ph active ti64 sph  AL4C3#1
+
+
+en-com ti64 fcc_a1#1 ti  m-f 
+AL func  1.0000E-06+(1.0200E-01-1.0000E-06)*hs(x-(0.8e-3));
+C  func  9.7295E-01+(1.0000E-04-9.7295E-01)*hs(x-(0.8e-3));
+Co func  2.7041E-02+(1.0000E-04-2.7041E-02)*hs(x-(0.8e-3));
+V  func  1.0000E-06+(3.6018E-02-1.0000E-06)*hs(x-(0.8e-3));
+W  func  1.0000E-06+(1.0000E-04-1.0000E-06)*hs(x-(0.8e-3));
+
+@@Ti func  1.0000E-04+(8.6168E-01-1.0000E-04)*hs(x-(200e-6));
+
+@@set_cond 
+@@bound
+@@lower
+@@gas
+@@ac 0 2.2461E-09; * N
+@@ac 0 4.7680E-02; * N
+@@ac 0 2.3429E-03; * N 
+@@ac 0 6.0842E-10; * N
+@@ac 0 2.8882E-08; * N
+@@ac 0 3.2847E-04; * N
+@@
+
+ent-mob-est  fcc_a1 c   1e-25;
+ent-mob-est  fcc_a1 ti  1e-25;
+ent-mob-est  fcc_a1 al  1e-25;
+ent-mob-est  fcc_a1 v   1e-25;
+ent-mob-est  fcc_a1 co  1e-25;
+ent-mob-est  fcc_a1 w  1e-25;
+
+ent-mob-est  diamond_a4  c   1e-25;
+ent-mob-est  diamond_a4  ti  1e-25;
+ent-mob-est  diamond_a4  al  1e-25;
+ent-mob-est  diamond_a4  v   1e-25;
+ent-mob-est  diamond_a4  co  1e-25;
+ent-mob-est  diamond_a4  w  1e-25;
+
+ut
+NO
+yes
+NO
+NO
+no
+No
+yes
+No
+No
+No
+YES
+0.001  
+yes
+no
+no
+no
+no
+no
+no
+no
+
+set_sim_cond
+0
+1
+2
+auto
+activ
+yes
+yes
+auto
+2
+no
+yes
+no
+
+
+ho
+YES
+n
+yes
+1e-3
+YES
+10000
+LOG
+5000
+yes
+no
+YES
+,,,,,,
+
+set-log 2
+
+se-si-Ti 1.00  y , 1e-6 1e-20,,,,,,,,,,,
+
+adv ch y n 3 y no
+
+poly set_num_lim,,1e-15,,,, 
+poly adv global y 20000
+
+save res yes
+
+sim
+
+poly l-st ,,,
+
+poly save p y
+set-inter
+
+@@go poly
+@@s-c n=1 p=1e5 t=1473
+@@s-c w(AL)=0.06  x(C)=1.0E-04 W(v)=0.04  x(w)=1e-4 x(co)=1e-4
+@@c-e 
+@@l-e,,,,
+@@s-c x(al)=1.0E-04  w(al)=none x(v)=1.0E-04 w(v)=none w(co)=0.12 x(co)=none X(C)=0.97250065 
+@@l-c
+@@c-e
+@@l-e,,,,
+@@set-inter
+@@go gibbs
+@@read g
+

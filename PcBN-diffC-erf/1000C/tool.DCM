@@ -1,0 +1,52 @@
+
+go da
+sw tcfe9 
+def-sys  al b co cr fe mo n nb ni ti v w
+rej ph gas
+get 
+
+go poly
+
+s-c  n=1 p=1e5 t=1273.15 
+@@s-c n(n)-n(b)=0
+s-c x(AL)=  0.006398940000000
+s-c x(B)=   0.425304581120000
+s-c x(CO)=  0.036933000000000
+s-c x(CR)=  0.012228870150000
+s-c x(FE)=  0.002317875000000
+s-c x(MO)=  0.001027928205000
+s-c x(N)=   0.425000149775562
+s-c x(Nb)=  0.001473944955000
+@@s-c x(NI)=  0.088608214500000
+s-c x(TI)=  0.000032745567000
+s-c x(V)=   0.000018997344000
+s-c x(W)=   0.000654753075000,
+l-c
+c-e
+l-e ,x,,
+
+
+
+
+
+s-c t=1273.15
+s-c x(al)= none
+s-c w(AL)= 0.06
+s-c x(B)=  1e-5
+s-c x(CO)= 1e-5
+s-c x(CR)= 1e-5
+s-c x(Fe)= 1e-5
+s-c x(MO)= 1e-5
+s-c x(N)=  1e-5
+s-c x(Nb)= 1e-5
+s-c x(NI)= 1e-5
+s-c x(ti)= none
+s-c w(V)=  0.04
+s-c x(W)=  1e-5
+s-c x(v)=  none
+l-c 
+
+c-e
+l-e,x,,
+
+set-inter

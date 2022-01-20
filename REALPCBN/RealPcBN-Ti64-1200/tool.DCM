@@ -1,0 +1,201 @@
+@@go da
+@@sw tcfe9 
+@@def-sys b n  al ti v cr fe co nb mo w ni
+@@def-el c 
+@@@@def-el o
+@@rej ph gas
+@@get 
+@@go poly
+@@s-c n=1 p=1e5 t=1273 
+@@s-c n(b)-n(n)=0
+@@s-c w(Al)=0.0169
+@@s-c w(Ti)=0.0023
+@@s-c w(V)=0.0001
+@@s-c w(Cr)=0.0284
+@@s-c w(Fe)=0.0046
+@@s-c w(Co)=0.0772
+@@s-c w(Nb)=0.0044
+@@s-c w(Mo)=0.0248
+@@s-c w(W)=0.0128
+@@s-c w(Ni)=0.1689
+@@@@lim C cemnetite ac(C,graph)=0.6
+@@@@s-c w(c)=2.8698E-03
+@@s-c w(C)=0.064
+@@@@s-c w(o)=0.0096
+@@@@ch-st ph
+@@@@BN_HP4=fix 0.75
+
+go da
+sw tcfe9 
+def-sys b n  al ti v cr fe co nb mo w ni
+def-el c 
+@@def-el o
+rej ph gas
+get 
+go poly
+s-c n=1 p=1e5 t=1473.15 
+s-c x(AL)= 0.005846618846294910000
+s-c x(B)=  0.425216185175534000000
+s-c x(C)=  0.001700951848922080000
+s-c x(CO)= 0.039413422475023100000
+s-c x(CR)= 0.009357576594069960000
+s-c x(Fe)= 0.002979841948111630000
+s-c x(MO)= 0.001763487898882450000
+s-c x(N)=  0.425000110014686000000
+s-c x(NB)= 0.000049847410468410900
+s-c x(NI)= 0.087640099444461100000
+s-c x(TI)= 0.000004566811347105940
+s-c x(V)=  0.000001563002849009500
+s-c x(W)=  0.001025728529349980000
+s-c x(ni)=none
+l-c
+c-e
+l-e,,,
+
+s-c x(B)=  1e-5
+s-c x(C)=  1e-4
+s-c x(CO)= 1e-4
+s-c x(CR)= 1e-4
+s-c x(Fe)= 1e-4
+s-c x(MO)= 1e-4
+s-c x(N)=  1e-4
+s-c x(NB)= 1e-4
+s-c x(NI)= 1e-4
+s-c x(W)=  1e-4
+s-c w(AL)= 0.06
+s-c w(V)=  0.04
+s-c x(al)= none
+s-c x(v)=  none
+s-c x(ti)= none
+
+c-e
+l-e,,,,
+
+set-inter
+
+###Tool
+N=1, P=1E5, T=1273.15, X(AL)=5.84662E-3, X(B)=0.425216, X(C)=1.70095E-3,
+X(CO)=3.94134E-2, X(CR)=9.35758E-3, X(FE)=2.97984E-3, X(MO)=1.76349E-3,
+X(N)=0.425, X(NB)=4.98474E-5, X(TI)=4.56681E-6, X(V)=1.563E-6,
+X(W)=1.02573E-3
+DEGREES OF FREEDOM 0
+
+Temperature   1273.15 K (  1000.00 C),  Pressure  1.000000E+05
+Number of moles of components  1.00000E+00,  Mass in grams  1.92102E+01
+Total Gibbs energy -1.28906E+05,  Enthalpy -7.94743E+04,  Volume  5.87036E-06
+
+Component               Moles       W-Fraction  Activity   Potential  Ref.stat
+AL                      5.8466E-03  8.2120E-03 5.2094E-09 -2.0190E+05 SER     
+B                       4.2522E-01  2.3930E-01 9.2438E-05 -9.8330E+04 SER     
+C                       1.7010E-03  1.0635E-03 1.4976E-01 -2.0099E+04 SER     
+CO                      3.9413E-02  1.2091E-01 7.3042E-04 -7.6448E+04 SER     
+CR                      9.3576E-03  2.5328E-02 3.5268E-04 -8.4155E+04 SER     
+FE                      2.9798E-03  8.6629E-03 3.7706E-05 -1.0782E+05 SER     
+MO                      1.7635E-03  8.8073E-03 1.1861E-04 -9.5690E+04 SER     
+N                       4.2500E-01  3.0989E-01 5.4909E-08 -1.7697E+05 SER     
+NB                      4.9847E-05  2.4108E-04 1.2275E-09 -2.1720E+05 SER     
+NI                      8.7640E-02  2.6775E-01 1.1767E-03 -7.1401E+04 SER     
+TI                      4.5668E-06  1.1382E-05 1.9071E-11 -2.6128E+05 SER     
+V                       1.5630E-06  4.1447E-06 4.5605E-09 -2.0331E+05 SER     
+W                       1.0257E-03  9.8167E-03 4.4811E-05 -1.0599E+05 SER     
+
+BN_HP4                      Status ENTERED     Driving force  0.0000E+00
+Moles 8.5000E-01, Mass 1.0548E+01, Volume fraction 8.1823E-01  Mass fractions:
+N   5.64389E-01  TI  0.00000E+00  V   0.00000E+00  CR  0.00000E+00  W   0.00000E+00
+B   4.35611E-01  NI  0.00000E+00  MO  0.00000E+00  CO  0.00000E+00
+AL  0.00000E+00  NB  0.00000E+00  FE  0.00000E+00  C   0.00000E+00
+
+FCC_A1#1                    Status ENTERED     Driving force  0.0000E+00
+Moles 1.5000E-01, Mass 8.6625E+00, Volume fraction 1.8177E-01  Mass fractions:
+NI  5.93775E-01  W   2.17696E-02  AL  1.82110E-02  B   2.69803E-04  N   1.78325E-07
+CO  2.68137E-01  MO  1.95311E-02  C   2.35845E-03  TI  2.52419E-05
+ CR  5.61679E-02  FE  1.92109E-02  NB  5.34615E-04  V   9.19141E-06
+
+###Ti64
+N=1, P=1E5, T=1273.15, X(B)=1E-5, X(C)=1E-4, X(CO)=1E-4, X(CR)=1E-4,
+X(FE)=1E-4, X(MO)=1E-4, X(N)=1E-4, X(NB)=1E-4, X(NI)=1E-4, X(W)=1E-4,
+W(AL)=6E-2, W(V)=4E-2
+DEGREES OF FREEDOM 0
+
+Temperature   1273.15 K (  1000.00 C),  Pressure  1.000000E+05
+Number of moles of components  1.00000E+00,  Mass in grams  4.58773E+01
+Total Gibbs energy -7.46242E+04,  Enthalpy  2.33606E+04,  Volume  1.07787E-05
+
+Component               Moles       W-Fraction  Activity   Potential  Ref.stat
+AL                      1.0202E-01  6.0000E-02 1.6029E-06 -1.4125E+05 SER     
+B                       1.0000E-05  2.3565E-06 1.2044E-08 -1.9303E+05 SER     
+C                       1.0000E-04  2.6181E-05 1.5635E-10 -2.3901E+05 SER     
+CO                      1.0000E-04  1.2846E-04 1.0979E-09 -2.1838E+05 SER     
+CR                      1.0000E-04  1.1334E-04 1.7073E-06 -1.4058E+05 SER     
+FE                      1.0000E-04  1.2173E-04 9.1534E-09 -1.9593E+05 SER     
+MO                      1.0000E-04  2.0912E-04 2.2384E-07 -1.6209E+05 SER     
+N                       1.0000E-04  3.0531E-05 8.3916E-19 -4.4059E+05 SER     
+NB                      1.0000E-04  2.0251E-04 2.4932E-07 -1.6095E+05 SER     
+NI                      1.0000E-04  1.2793E-04 1.3266E-09 -2.1638E+05 SER     
+TI                      8.6105E-01  8.9864E-01 1.9600E-03 -6.5999E+04 SER     
+V                       3.6024E-02  4.0000E-02 2.3127E-04 -8.8622E+04 SER     
+W                       1.0000E-04  4.0074E-04 2.6743E-06 -1.3583E+05 SER     
+
+BCC_A2                      Status ENTERED     Driving force  0.0000E+00
+Moles 1.0000E+00, Mass 4.5877E+01, Volume fraction 1.0000E+00  Mass fractions:
+TI  8.98637E-01  W   4.00743E-04  CO  1.28458E-04  CR  1.13337E-04  B   2.35651E-06
+AL  6.00000E-02  MO  2.09123E-04  NI  1.27928E-04  N   3.05315E-05
+V   4.00000E-02  NB  2.02510E-04  FE  1.21731E-04  C   2.61807E-05
+
+
+
+
+N=1, P=1E5, T=1473.15, X(AL)=5.84662E-3, X(B)=0.425216, X(C)=1.70095E-3,
+X(CO)=3.94134E-2, X(CR)=9.35758E-3, X(FE)=2.97984E-3, X(MO)=1.76349E-3,
+X(N)=0.425, X(NB)=4.98474E-5, X(TI)=4.56681E-6, X(V)=1.563E-6,
+X(W)=1.02573E-3
+DEGREES OF FREEDOM 0
+
+Temperature   1473.15 K (  1200.00 C),  Pressure  1.000000E+05
+Number of moles of components  1.00000E+00,  Mass in grams  1.92102E+01
+Total Gibbs energy -1.37042E+05,  Enthalpy -7.43332E+04,  Volume  5.92538E-06
+
+Component               Moles       W-Fraction  Activity   Potential  Ref.stat
+AL                      5.8466E-03  8.2120E-03 1.0987E-08 -2.2447E+05 SER     
+B                       4.2522E-01  2.3930E-01 7.1877E-05 -1.1686E+05 SER     
+C                       1.7010E-03  1.0635E-03 3.2319E-02 -4.2038E+04 SER     
+CO                      3.9413E-02  1.2091E-01 4.2323E-04 -9.5142E+04 SER     
+CR                      9.3576E-03  2.5328E-02 2.0188E-04 -1.0421E+05 SER     
+FE                      2.9798E-03  8.6629E-03 2.4146E-05 -1.3022E+05 SER     
+MO                      1.7635E-03  8.8073E-03 5.2494E-05 -1.2071E+05 SER     
+N                       4.2500E-01  3.0989E-01 8.2993E-07 -1.7150E+05 SER     
+NB                      4.9847E-05  2.4108E-04 1.2515E-09 -2.5108E+05 SER     
+NI                      8.7640E-02  2.6775E-01 8.3755E-04 -8.6781E+04 SER     
+TI                      4.5668E-06  1.1382E-05 1.3714E-11 -3.0637E+05 SER     
+V                       1.5630E-06  4.1447E-06 2.9382E-09 -2.4063E+05 SER     
+W                       1.0257E-03  9.8167E-03 2.4214E-05 -1.3018E+05 SER     
+
+BN_HP4                      Status ENTERED     Driving force  0.0000E+00
+Moles 8.4534E-01, Mass 1.0490E+01, Volume fraction 8.1297E-01  Mass fractions:
+N   5.64389E-01  TI  0.00000E+00  V   0.00000E+00  CR  0.00000E+00  W   0.00000E+00
+B   4.35611E-01  NI  0.00000E+00  MO  0.00000E+00  CO  0.00000E+00
+AL  0.00000E+00  NB  0.00000E+00  FE  0.00000E+00  C   0.00000E+00
+
+FCC_A1#1                    Status ENTERED     Driving force  0.0000E+00
+Moles 1.2218E-01, Mass 7.1055E+00, Volume fraction 1.4790E-01  Mass fractions:
+NI  6.07536E-01  FE  2.04264E-02  AL  1.27886E-02  B   2.25653E-04  N   3.94441E-06
+CO  2.67252E-01  W   1.93247E-02  C   1.22901E-03  TI  8.58620E-06
+CR  5.65163E-02  MO  1.43244E-02  NB  3.57414E-04  V   6.63853E-06
+
+LIQUID                      Status ENTERED     Driving force  0.0000E+00
+Moles 2.8530E-02, Mass 1.5339E+00, Volume fraction 3.4863E-02  Mass fractions:
+NI  5.38977E-01  MO  4.39449E-02  FE  1.38696E-02  N   3.23144E-03  V   2.11559E-05
+CO  2.76279E-01  W   3.34236E-02  AL  8.84914E-03  NB  1.36354E-03
+CR  5.54004E-02  B   1.69113E-02  C   7.62599E-03  TI  1.02778E-04
+
+ALN                         Status ENTERED     Driving force  0.0000E+00
+Moles 3.9515E-03, Mass 8.0984E-02, Volume fraction 4.2701E-03  Mass fractions:
+AL  6.58274E-01  TI  0.00000E+00  V   0.00000E+00  CR  0.00000E+00  B   0.00000E+00
+N   3.41726E-01  NI  0.00000E+00  MO  0.00000E+00  CO  0.00000E+00
+W   0.00000E+00  NB  0.00000E+00  FE  0.00000E+00  C   0.00000E+00
+
+
+
+
+
+

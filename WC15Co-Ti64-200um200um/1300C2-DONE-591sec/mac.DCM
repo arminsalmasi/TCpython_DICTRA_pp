@@ -1,0 +1,220 @@
+s-g-v 5
+
+@@go da
+@@sw tcfe9
+@@def_sys w c co ti al v
+@@get
+@@app mobfe5
+@@def_sys w c co ti al v
+@@get
+
+go gibbs
+read g
+
+go d-m
+s-cond glob t 0 1573; * N
+ent-region CC
+ent-grid CC 400e-6 r-p-b-p 95 grid.DAT
+
+en-ph ACTIVE CC MATRIX fcc_a1#1
+en-ph ACTIVE CC sph BCC_A2#1
+en-ph ACTIVE CC sph BCC_A2#2
+en-ph ACTIVE CC sph FCC_A1#2
+en-ph ACTIVE CC sph FCC_A1#3
+en-ph ACTIVE CC sph FCC_A1#4
+en-ph ACTIVE CC sph hcp_a3#1
+en-ph ACTIVE CC sph mc_shp#1
+en-ph ACTIVE CC sph M12C#1
+en-ph ACTIVE CC sph M6C#1
+en-ph ACTIVE CC sph M6C#2
+en-ph ACTIVE CC sph liquid#1
+en-ph ACTIVE CC sph liquid#2
+en-ph ACTIVE CC sph liquid#3
+en-ph ACTIVE CC sph liquid#4
+
+
+@@left=Tool,right=Ti64
+en-com CC FCC_A1#1 w m-f
+AL func  1.0000E-05+(1.0198E-01-1.0000E-05)*hs(x-(200e-6));
+C  func  3.8415E-01+(1.0000E-05-3.8415E-01)*hs(x-(200e-6));
+Co func  2.2757E-01+(1.0000E-05-2.2757E-01)*hs(x-(200e-6));
+Ti func  1.0000E-05+(8.6198E-01-1.0000E-05)*hs(x-(200e-6));
+V  func  1.0000E-05+(3.6010E-02-1.0000E-05)*hs(x-(200e-6));
+
+ent-mob-est  fcc_a1 al 1e-25;
+ent-mob-est  fcc_a1 c  1e-25;
+ent-mob-est  fcc_a1 co 1e-25;
+ent-mob-est  fcc_a1 ti 1e-25;
+ent-mob-est  fcc_a1 v  1e-25;
+ent-mob-est  fcc_a1 w  1e-25;
+
+ent-mob-est  m6c al 1e-25;
+ent-mob-est  m6c c  1e-25;
+ent-mob-est  m6c co 1e-25;
+ent-mob-est  m6c ti 1e-25;
+ent-mob-est  m6c v  1e-25;
+ent-mob-est  m6c w  1e-25;
+
+ent-mob-est  m12c  al 1e-25;
+ent-mob-est  m12c  c  1e-25;
+ent-mob-est  m12c  co 1e-25;
+ent-mob-est  m12c  ti 1e-25;
+ent-mob-est  m12c  v  1e-25;
+ent-mob-est  m12c  w  1e-25;
+
+
+@@ent-mob-est mu_phase  al 1e-25;
+@@ent-mob-est mu_phase  c  1e-25;
+@@ent-mob-est mu_phase  co 1e-25;
+@@ent-mob-est mu_phase  ti 1e-25;
+@@ent-mob-est mu_phase  v  1e-25;
+@@ent-mob-est mu_phase  w  1e-25;
+
+ut
+NO
+yes
+NO
+NO
+no
+No
+yes
+No
+No
+No
+YES
+0.0001
+yes
+no
+no
+no
+no
+no
+no
+no
+
+set_sim_cond
+0
+1
+2
+auto
+activ
+yes
+yes
+auto
+2
+no
+yes
+no
+
+
+ho
+YES
+n
+yes
+1e-3
+YES
+10000
+LOG
+5000
+yes
+no
+YES
+
+adv
+solve
+yes
+
+
+save res yes
+
+set-log 2
+
+
+@@Tool
+set_cond 
+bo
+lower
+gas
+ac 0  5.6930E-10; * N
+ac 0  7.0995E-02; * N
+ac 0  1.0747E-03; * N 
+ac 0  2.6410E-10; * N
+ac 0  2.1295E-09; * N
+ac 0  1.7172E-04; * N
+
+
+
+@@ti64
+set_cond 
+bo
+upper
+gas
+ac 0 4.4301E-06; * N
+ac 0 1.2457E-10; * N
+ac 0 2.9363E-10; * N
+ac 0 1.0081E-03; * N
+ac 0 1.0284E-04; * N
+ac 0 1.1802E-07; * N
+
+adv ch y n 1 y no
+
+se-si-Ti 600 y , 1e-6 1e-20,,,,,,,,,,,
+
+sim
+
+set-inter
+###################
+go da
+sw tcfe9
+def-sys al c co ti v w
+get 
+go poly
+s-c n=1 p=1e5 t=1573  x(AL)=1.0000E-05  x(C)=3.8415E-01 x(CO)=2.2757E-01 x(TI)=1.0000E-05 x(V)=1.0000E-05
+c-e
+l-e,,,,,,
+s-c x(AL)=1.0198E-01 x(C)=1.0000E-05 x(CO)=1.0000E-05  x(TI)=8.6198E-01  x(V)=3.6010E-02
+c-e
+l-e,,,,,,
+################
+#Tool
+################
+N=1, P=1E5, T=1573, X(AL)=1E-5, X(C)=0.38415, X(CO)=0.22757, X(TI)=1E-5,
+X(V)=1E-5
+Component               Moles       W-Fraction  Activity   Potential  Ref.stat
+AL                      1.0000E-05  3.0179E-06 5.6930E-10 -2.7840E+05 SER     
+C                       3.8415E-01  5.1607E-02 7.0995E-02 -3.4595E+04 SER     
+CO                      2.2757E-01  1.5000E-01 1.0747E-03 -8.9402E+04 SER     
+TI                      1.0000E-05  5.3553E-06 2.6410E-10 -2.8845E+05 SER     
+V                       1.0000E-05  5.6977E-06 2.1295E-09 -2.6115E+05 SER     
+W                       3.8825E-01  7.9837E-01 1.7172E-04 -1.1339E+05 SER     
+MC_SHP                      Status ENTERED     Driving force  0.0000E+00
+Moles 7.5338E-01, Mass 7.3779E+01, Volume fraction 7.2429E-01  Mass fractions:
+W   9.38676E-01  AL  0.00000E+00  CO  0.00000E+00
+C   6.13241E-02  TI  0.00000E+00  V   0.00000E+00
+FCC_A1#1                    Status ENTERED     Driving force  0.0000E+00
+Moles 2.4662E-01, Mass 1.5628E+01, Volume fraction 2.7571E-01  Mass fractions:
+CO  8.58181E-01  C   5.73411E-03  TI  3.06379E-05
+W   1.36005E-01  V   3.25966E-05  AL  1.72655E-05
+
+N=1, P=1E5, T=1573, X(AL)=0.10198, X(C)=1E-5, X(CO)=1E-5, X(TI)=0.86198,
+X(V)=3.601E-2
+DEGREES OF FREEDOM 0
+#################
+#ti64
+#################
+Temperature   1573.00 K (  1299.85 C),  Pressure  1.000000E+05
+Number of moles of components  1.00000E+00,  Mass in grams  4.58602E+01
+Total Gibbs energy -9.85581E+04,  Enthalpy  3.28334E+04,  Volume  1.09347E-05
+
+Component               Moles       W-Fraction  Activity   Potential  Ref.stat
+AL                      1.0198E-01  6.0000E-02 4.4301E-06 -1.6122E+05 SER     
+C                       1.0000E-05  2.6190E-06 1.2457E-10 -2.9828E+05 SER     
+CO                      1.0000E-05  1.2851E-05 2.9363E-10 -2.8706E+05 SER     
+TI                      8.6198E-01  8.9994E-01 1.0081E-03 -9.0239E+04 SER     
+V                       3.6010E-02  4.0000E-02 1.0284E-04 -1.2009E+05 SER     
+W                       1.0000E-05  4.0089E-05 1.1802E-07 -2.0864E+05 SER     
+
+BCC_A2                      Status ENTERED     Driving force  0.0000E+00
+Moles 1.0000E+00, Mass 4.5860E+01, Volume fraction 1.0000E+00  Mass fractions:
+TI  8.99945E-01  V   3.99995E-02  CO  1.28506E-05
+AL  6.00003E-02  W   4.00893E-05  C   2.61905E-06

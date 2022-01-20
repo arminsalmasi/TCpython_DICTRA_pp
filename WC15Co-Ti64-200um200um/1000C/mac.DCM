@@ -1,0 +1,154 @@
+s-g-v 5
+@@go da
+@@sw tcfe9
+@@def_sys w c co ti al v
+@@get
+@@app mobfe5
+@@def_sys w c co ti al v
+@@get
+
+
+go gibbs
+read g3
+
+
+go d-m
+s-cond glob t 0 1273; * N
+ent-region CC
+@@ent_grid CC 100e-6 doub 30 0.85 1.15
+ent-grid CC 400e-6 r-p-b-p 95 grid.DAT
+
+en-ph ACTIVE CC MATRIX fcc_a1#1
+en-ph ACTIVE CC sph m6c#1
+en-ph ACTIVE CC sph m6c#2
+en-ph ACTIVE CC sph FCC_A1#2
+en-ph ACTIVE CC sph BCC_A2#1
+en-ph ACTIVE CC sph BCC_A2#2
+en-ph ACTIVE CC sph BCC_A2#3
+en-ph ACTIVE CC sph hcp_a3#1
+en-ph ACTIVE CC sph hcp_a3#2
+en-ph ACTIVE CC sph mc_shp
+en-ph ACTIVE CC sph liquid#1
+en-ph ACTIVE CC sph M12C
+
+
+
+@@ binder | tialv | 
+en-com CC FCC_A1#1 w m-f
+AL func  1.0000E-04+(1.0200E-01-1.0000E-04)*hs(x-(200e-6));
+C  func  3.8414E-01+(1.0000E-04-3.8414E-01)*hs(x-(200e-6));
+Co func  2.2705E-02+(1.0000E-04-2.2705E-02)*hs(x-(200e-6));
+Ti func  9.0000E-05+(8.6168E-01-9.0000E-05)*hs(x-(200e-6));
+V  func  1.0000E-04+(3.6018E-02-1.0000E-04)*hs(x-(200e-6));
+
+ent-mob-est  fcc_a1 al 1e-25;
+ent-mob-est  fcc_a1 c  1e-25;
+ent-mob-est  fcc_a1 co 1e-25;
+ent-mob-est  fcc_a1 ti 1e-25;
+ent-mob-est  fcc_a1 v  1e-25;
+ent-mob-est  fcc_a1 w  1e-25;
+
+ent-mob-est  m6c al 1e-25;
+ent-mob-est  m6c c  1e-25;
+ent-mob-est  m6c co 1e-25;
+ent-mob-est  m6c ti 1e-25;
+ent-mob-est  m6c v  1e-25;
+ent-mob-est  m6c w  1e-25;
+
+ent-mob-est  m12c  al 1e-25;
+ent-mob-est  m12c  c  1e-25;
+ent-mob-est  m12c  co 1e-25;
+ent-mob-est  m12c  ti 1e-25;
+ent-mob-est  m12c  v  1e-25;
+ent-mob-est  m12c  w  1e-25;
+
+
+ut
+NO
+yes
+NO
+NO
+no
+No
+yes
+No
+No
+No
+YES
+0.0001
+yes
+no
+no
+no
+no
+no
+no
+no
+
+set_sim_cond
+0
+1
+2
+auto
+activ
+yes
+yes
+auto
+2
+no
+yes
+no
+
+
+ho
+YES
+n
+yes
+1e-3
+YES
+10000
+LOG
+5000
+yes
+no
+YES
+
+adv
+solve
+yes
+
+
+save res yes
+
+set-log 2
+
+set_cond 
+bo
+lower
+gas
+ZERO_FLUX
+ac 0 4.7680E-02; * N
+ac 0 2.3429E-03;  * N 
+ZERO_FLUX
+ZERO_FLUX
+ac 0 3.3847E-04; * N
+
+
+
+set_cond 
+bo
+upper
+gas
+ac 0 1.5986E-06; * N
+ac 0 1.5408E-10; * N
+ac 0 1.0888E-09; * N
+ac 0 1.9626E-03; * N
+ac 0 2.3126E-04; * N
+ZERO_FLUX
+
+adv ch y n 3 y no
+
+se-si-Ti 600 y , 1e-6 1e-20,,,,,,,,,,,
+
+set-inter
+sim

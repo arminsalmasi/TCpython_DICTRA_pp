@@ -1,0 +1,149 @@
+s-g-v 5
+
+go gibbs
+read g
+
+@@go da
+@@sw tcfe9
+@@def_sys b n ti  co
+@@rej ph gas
+@@get
+@@app mobfe5
+@@def_sys b n ti  co
+@@get
+
+go d-m
+s-cond glob t 0 1273.15; * N
+ent-region ti64
+
+ent_grid ti64 100e-6 geo 50 0.98
+
+en-ph ACTIVE ti64 mat  bcc_a2#1
+en-ph ACTIVE ti64 sph  hcp_a3#1
+en-ph ACTIVE ti64 sph  fcc_a1#1
+en-ph ACTIVE ti64 sph  fcc_a1#2
+en-ph ACTIVE ti64 sph  liquid#1  
+en-ph ACTIVE ti64 sph HCP_A3#2
+en-ph ACTIVE ti64 sph MB_B27#1
+en-ph ACTIVE ti64 sph MB2_C32#1
+en-ph active ti64 sph CO3VV                   
+en-ph active ti64 sph TI2N                    
+en-ph active ti64 sph CUB_A13                 
+en-ph active ti64 sph CR3SI                   
+en-ph active ti64 sph CBCC_A12                
+en-ph active ti64 sph COZN4_GAMMA   
+
+en-com ti64 bcc_a2#1 ti w-f
+b  lin 1.0E-5  ,
+co lin 1.0E-5  ,
+n  lin 1.0E-5  , 
+
+ent-mob-est  fcc_a1 n   1e-25;
+ent-mob-est  fcc_a1 ti  1e-25;
+ent-mob-est  fcc_a1 b   1e-25;
+ent-mob-est  fcc_a1 co  1e-25;
+
+
+create ,,,,,,
+ent-reg tin
+ent_grid tin 0.2e-6 lin 4 
+
+en-ph active tin mat  fcc_a1#1 
+en-ph active tin sph  fcc_a1#2 
+en-ph active tin sph  liquid#1
+en-ph active tin sph  Ti2N#1
+en-ph ACTIVE tin sph HCP_A3#2
+en-ph ACTIVE tin sph MB_B27#1
+en-ph ACTIVE tin sph MB2_C32#1
+en-ph active tin sph BCC_A2                  
+en-ph active tin sph HCP_A3#1                
+en-ph active tin sph CO3VV                   
+en-ph active tin sph CUB_A13                 
+en-ph active tin sph CR3SI                   
+en-ph active tin sph CBCC_A12                
+en-ph active tin sph COZN4_GAMMA   
+
+
+ent-comp  tin fcc_a1#1 ti m-f 
+b  lin 1.0E-5  ,
+co lin 1.0E-5  ,
+n  lin 3.30E-1 , 
+
+ent-mob-est  fcc_a1 n   1e-25;
+ent-mob-est  fcc_a1 ti  1e-25;
+ent-mob-est  fcc_a1 b   1e-25;
+ent-mob-est  fcc_a1 co  1e-25;
+
+@@Tool
+set_cond 
+bo
+lower
+gas
+ac 0 8.6315E-05; * N
+ac 0 2.3880E-03; * N
+ac 0 5.8675E-08; * N
+ac 0 1.5352E-10; * N
+
+ut
+NO
+yes
+NO
+NO
+no
+No
+yes
+No
+No
+No
+YES
+0.001     
+yes
+no
+no
+no
+no
+no
+no
+no
+
+set_sim_cond
+0
+1
+2
+auto
+activ
+yes
+yes
+auto
+2
+no
+yes
+no
+
+ho
+YES
+n
+yes
+1e-3
+YES
+10000
+LOG
+5000
+yes
+no
+YES
+
+@@adv
+@@solve
+@@yes
+
+
+se-si-Ti 600  y , 1e-6 1e-20,,,,,,,,,,,
+adv ch y n 1 y no
+set-log 2
+
+save res yes
+sim
+
+set-inter
+

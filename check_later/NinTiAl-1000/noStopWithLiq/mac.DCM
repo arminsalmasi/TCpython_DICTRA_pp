@@ -1,0 +1,137 @@
+s-g-v 5
+
+go gibbs
+read g
+
+@@go da
+@@sw tcfe9
+@@def_sys Al n ti 
+@@rej ph *
+@@rest ph bcc_a2 hcp_a3 fcc_a1 Ti2N ALN liquid  
+@@get
+@@app mobfe5
+@@def_sys Al n ti 
+@@rej ph *
+@@rest ph bcc_a2 hcp_a3 fcc_a1 Ti2N ALN liquid  
+@@get
+
+go d-m
+s-cond glob t 0 1273; * N
+ent-region ti64
+ent_grid ti64 5e-3 geo 100 0.96
+
+
+en-ph ACTIVE ti64 mat  bcc_a2
+en-ph ACTIVE ti64 sph  hcp_a3#1
+en-ph ACTIVE ti64 sph  fcc_a1#1
+en-ph ACTIVE ti64 sph  fcc_a1#2
+en-ph ACTIVE ti64 sph  fcc_a1#3
+en-ph active ti64 sph  TI2N
+en-ph active ti64 sph  ALN
+en-ph active ti64 sph  liq
+en-ph ACTIVE ti64 sph  hcp_a3#2
+en-ph ACTIVE ti64 sph  hcp_a3#3
+@@en-ph ACTIVE ti64 sph  bcc_a2#2
+
+
+
+en-com ti64 bcc_a2 ti w-f
+al lin 0.06 ,
+n lin 1.0000E-06 , 
+
+
+
+ent-mob-est  fcc_a1 n   1e-15;
+ent-mob-est  fcc_a1 ti  1e-15;
+ent-mob-est  fcc_a1 AL  1e-15;
+
+ent-mob-est  Ti2N  n   1e-15;
+ent-mob-est  Ti2N  ti  1e-15;
+ent-mob-est  Ti2N  AL  1e-15;
+
+ent-mob-est  AlN  n   1e-15;
+ent-mob-est  AlN  ti  1e-15;
+ent-mob-est  AlN  AL  1e-15;
+
+ut
+NO
+yes
+NO
+NO
+no
+No
+yes
+No
+No
+No
+YES
+0.001
+yes
+no
+no
+no
+no
+no
+no
+no
+
+set_sim_cond
+0
+1
+2
+auto
+activ
+yes
+yes
+auto
+2
+no
+yes
+no
+
+
+ho
+YES
+n
+yes
+1e-3
+YES
+10000
+LOG
+5000
+yes
+no
+YES
+
+adv
+solve
+yes
+
+
+
+set-log 2
+
+@@set-ref n gas,,,,
+@@@@@ac 0 6.7120E-01; * N
+
+set_cond 
+bo
+upper
+gas
+ac 0 2.0902E-10; * N
+ac 0 5.5288E-07; * N
+ac 0 1.5000E-10; * N
+
+
+se-si-Ti 600  y , 1e-6 1e-20,,,,,,,,,,,
+
+adv ch y n 3 y no
+
+poly set_num_lim ,,1e-15,
+poly adv global y 20000
+
+
+save res yes
+set-inter
+sim
+

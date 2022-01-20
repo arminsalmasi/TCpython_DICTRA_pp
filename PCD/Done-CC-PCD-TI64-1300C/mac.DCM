@@ -1,0 +1,170 @@
+s-g-v 5
+
+go da
+sw tcfe9
+def_sys co  c ti al v w
+rej ph graph
+get
+app mobfe5
+def_sys co c ti al v w
+get
+
+@@go gibbs
+@@read g
+AL tool  1.0000E-04 ti64 1.0200E-01
+C  tool  9.7250E-01 ti64 1.0000E-04
+Co tool  2.7099E-02 ti64 1.0000E-04
+V  tool  1.0000E-04 ti64 3.6018E-02
+W  tool  1.0000E-04 ti64 1.0000E-04
+
+go d-m
+s-cond glob t 0 1573; * N
+ent-region ti64
+ent_grid ti64 0.65  geo 100 0.97 
+en-ph ACTIVE ti64 mat  bcc_a2#1
+en-ph ACTIVE ti64 sph  hcp_a3#1
+en-ph ACTIVE ti64 sph  fcc_a1#1
+en-ph ACTIVE ti64 sph  fcc_a1#2
+en-ph ACTIVE ti64 sph  liquid#1
+en-ph active ti64 sph DIAMOND_FCC_A4#1
+
+
+en-com ti64 bcc_a2#1  ti m-f 
+al  lin  1.0200E-01  , 
+c   lin  1.0000E-04  , 
+co  lin  1.0000E-04  , 
+v   lin  3.6018E-02 , 
+w   lin  1.0000E-04  , 
+         
+
+creat,,,,,
+ent-region pcd ti64 yes 
+ent_grid pcd  0.89  doub 100 0.97 1.03 
+en-ph ACTIVE pcd  mat  liquid#1
+en-ph ACTIVE pcd  sph  fcc_a1#1
+en-ph ACTIVE pcd  sph  bcc_a2#1
+en-ph ACTIVE pcd  sph  hcp_a3#1
+en-ph ACTIVE pcd  sph  fcc_a1#2
+@@en-ph ACTIVE pcd  sph  fcc_a1#3
+@@en-ph ACTIVE pcd  sph  graphite
+en-ph ACTIVE pcd  sph  mc_shp
+en-ph active pcd  sph DIAMOND_FCC_A4#1
+
+en-com pcd liquid ti m-f 
+al  lin  1.0000E-04 ,
+c   lin  9.7250E-01 ,
+Co  lin  2.7099E-02 ,
+v   lin  1.0000E-04 ,
+w   lin  1.0000E-04 ,
+
+@@co  lin  2.7041E-02 , 
+
+
+set_cond 
+bound
+lower
+gas
+ac 0 5.7007E-09; * N
+ac 0 7.1303E-02; * N
+ac 0 1.0736E-03; * N 
+ac 0 2.3848E-09; * N
+ac 0 2.1386E-08; * N
+ac 0 1.7098E-04; * N
+
+
+@@ent-region cc pcd y
+@@ent_grid cc 2.43  geo 100 1.030 
+@@en-ph ACTIVE cc  mat  fcc_a1#1
+@@@@en-ph ACTIVE cc  sph  bcc_a2#1
+@@@@en-ph ACTIVE cc  sph  hcp_a3#1
+@@en-ph ACTIVE cc  sph  fcc_a1#2
+@@@@en-ph ACTIVE cc  sph  fcc_a1#3
+@@en-ph ACTIVE cc  sph  liquid#1
+@@@@en-ph ACTIVE cc  sph  graphite
+@@en-ph ACTIVE cc  sph  mc_shp
+@@en-ph active cc  sph DIAMOND_FCC_A4#1
+@@en-com cc fcc_a1#1 w  m-f 
+@@al  lin 1.0000E-04  , 
+@@c   lin 3.8414E-01  , 
+@@co  lin 2.2750E-01  , 
+@@ti  lin 9.0000E-05  ,
+@@v   lin 1.0000E-04  , 
+@@@@w   lin 3.8807E-01  ,
+
+ent-mob-est  fcc_a1 c   1e-25;
+ent-mob-est  fcc_a1 ti  1e-25;
+ent-mob-est  fcc_a1 al  1e-25;
+ent-mob-est  fcc_a1 v   1e-25;
+ent-mob-est  fcc_a1 co  1e-25;
+ent-mob-est  fcc_a1 w  1e-25;
+
+ut
+NO
+yes
+NO
+NO
+no
+No
+yes
+No
+No
+No
+YES
+0.00002
+yes
+no
+no
+no
+no
+no
+no
+no
+
+set_sim_cond
+0
+1
+2
+auto
+activ
+yes
+yes
+auto
+2
+no
+yes
+no
+
+
+ho
+YES
+n
+yes
+1e-3
+YES
+10000
+LOG
+5000
+yes
+no
+YES
+
+
+
+
+set-log 2
+
+
+
+se-si-Ti 600 y , 1e-6 1e-20,,,,,,,,,,,
+
+adv ch y n 3 y no
+
+@@poly set_num_lim,,1e-15,,,, 
+@@poly adv global y 20000
+
+
+save res yes
+
+
+set-inter
+

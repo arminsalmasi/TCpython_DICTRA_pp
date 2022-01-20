@@ -1,0 +1,157 @@
+s-g-v 5
+
+@@go da
+@@sw tcfe9
+@@def_sys w c co ti al v
+@@get
+@@app mobfe5
+@@def_sys w c co ti al v
+@@get
+
+go gibbs
+read g
+
+go d-m
+s-cond glob t 0 1473; * N
+ent-region CC
+ent-grid CC 400e-6 r-p-b-p 95 grid.DAT
+
+en-ph ACTIVE CC MATRIX fcc_a1#1
+en-ph ACTIVE CC sph BCC_A2#1
+en-ph ACTIVE CC sph BCC_A2#2
+en-ph ACTIVE CC sph BCC_A2#3
+en-ph ACTIVE CC sph hcp_a3#1
+en-ph ACTIVE CC sph mc_shp
+en-ph ACTIVE CC sph fcc_a1#2
+en-ph ACTIVE CC sph fcc_a1#3
+en-ph ACTIVE CC sph M12C
+en-ph ACTIVE CC sph M6C#1
+en-ph ACTIVE CC sph MU_PHASE
+
+
+
+@@left=Tool,right=Ti64
+en-com CC FCC_A1#1 w m-f
+AL func  1.0000E-05+(1.0198E-01-1.0000E-05)*hs(x-(200e-6));
+C  func  3.8415E-01+(1.0000E-05-3.8415E-01)*hs(x-(200e-6));
+Co func  2.2757E-01+(1.0000E-05-2.2757E-01)*hs(x-(200e-6));
+Ti func  1.0000E-05+(8.6198E-01-1.0000E-05)*hs(x-(200e-6));
+V  func  1.0000E-05+(3.6010E-02-1.0000E-05)*hs(x-(200e-6));
+
+ent-mob-est  fcc_a1 al 1e-25;
+ent-mob-est  fcc_a1 c  1e-25;
+ent-mob-est  fcc_a1 co 1e-25;
+ent-mob-est  fcc_a1 ti 1e-25;
+ent-mob-est  fcc_a1 v  1e-25;
+ent-mob-est  fcc_a1 w  1e-25;
+
+ent-mob-est  m6c al 1e-25;
+ent-mob-est  m6c c  1e-25;
+ent-mob-est  m6c co 1e-25;
+ent-mob-est  m6c ti 1e-25;
+ent-mob-est  m6c v  1e-25;
+ent-mob-est  m6c w  1e-25;
+
+ent-mob-est  m12c  al 1e-25;
+ent-mob-est  m12c  c  1e-25;
+ent-mob-est  m12c  co 1e-25;
+ent-mob-est  m12c  ti 1e-25;
+ent-mob-est  m12c  v  1e-25;
+ent-mob-est  m12c  w  1e-25;
+
+
+ent-mob-est mu_phase  al 1e-25;
+ent-mob-est mu_phase  c  1e-25;
+ent-mob-est mu_phase  co 1e-25;
+ent-mob-est mu_phase  ti 1e-25;
+ent-mob-est mu_phase  v  1e-25;
+ent-mob-est mu_phase  w  1e-25;
+
+ut
+NO
+yes
+NO
+NO
+no
+No
+yes
+No
+No
+No
+YES
+0.0001
+yes
+no
+no
+no
+no
+no
+no
+no
+
+set_sim_cond
+0
+1
+2
+auto
+activ
+yes
+yes
+auto
+2
+no
+yes
+no
+
+
+ho
+YES
+n
+yes
+1e-3
+YES
+10000
+LOG
+5000
+yes
+no
+YES
+
+adv
+solve
+yes
+
+
+save res yes
+
+set-log 2
+
+set_cond 
+bo
+lower
+gas
+ZERO_FLUX
+ac 0 7.2372E-02; * N
+ac 0 1.3856E-03;  * N 
+ZERO_FLUX
+ZERO_FLUX
+ac 0 1.8664E-04; * N
+
+
+set_cond 
+bo
+upper
+gas
+ac 0 3.3685E-06; * N
+ac 0 6.9371E-10; * N
+ac 0 2.2547E-09; * N
+ac 0 1.2428E-03; * N
+ac 0 1.3246E-04; * N
+ac 0 1.5185E-06; * N
+
+adv ch y n 3 y no
+
+se-si-Ti 600 y , 1e-6 1e-20,,,,,,,,,,,
+
+set-inter
+sim

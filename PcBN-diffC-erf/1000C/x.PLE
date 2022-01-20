@@ -1,0 +1,31 @@
+ Output from POLY-3, equilibrium =     1, label A0  , database: TCFE9   
+
+ Conditions:
+ N=1, P=1E5, T=1273.15, X(B)=1E-5, X(CO)=1E-5, X(CR)=1E-5, X(FE)=1E-5,
+    X(MO)=1E-5, X(N)=1E-5, X(NB)=1E-5, X(W)=1E-5, W(AL)=6E-2, X(NI)=1E-5,
+    W(V)=4E-2
+ DEGREES OF FREEDOM 0
+
+ Temperature   1273.15 K (  1000.00 C),  Pressure  1.000000E+05
+ Number of moles of components  1.00000E+00,  Mass in grams  4.58609E+01
+ Total Gibbs energy -7.44943E+04,  Enthalpy  2.34205E+04,  Volume  1.07820E-05
+
+ Component               Moles       M-Fraction  Activity   Potential  Ref.stat
+ AL                      1.0198E-01  1.0198E-01 1.5948E-06 -1.4131E+05 SER     
+ B                       1.0000E-05  1.0000E-05 1.1950E-08 -1.9311E+05 SER     
+ CO                      1.0000E-05  1.0000E-05 1.0861E-10 -2.4287E+05 SER     
+ CR                      1.0000E-05  1.0000E-05 1.6993E-07 -1.6501E+05 SER     
+ FE                      1.0000E-05  1.0000E-05 9.0906E-10 -2.2038E+05 SER     
+ MO                      1.0000E-05  1.0000E-05 2.2224E-08 -1.8654E+05 SER     
+ N                       1.0000E-05  1.0000E-05 8.1414E-20 -4.6529E+05 SER     
+ NB                      1.0000E-05  1.0000E-05 2.4889E-08 -1.8534E+05 SER     
+ NI                      1.0000E-05  1.0000E-05 1.3154E-10 -2.4084E+05 SER     
+ TI                      8.6192E-01  8.6192E-01 1.9631E-03 -6.5983E+04 SER     
+ V                       3.6011E-02  3.6011E-02 2.3108E-04 -8.8631E+04 SER     
+ W                       1.0000E-05  1.0000E-05 2.6574E-07 -1.6027E+05 SER     
+
+ BCC_A2                      Status ENTERED     Driving force  0.0000E+00
+ Moles 1.0000E+00, Mass 4.5861E+01, Volume fraction 1.0000E+00  Mole fractions:
+ TI  8.61918E-01  N   1.00000E-05  W   1.00000E-05  B   1.00000E-05
+ AL  1.01981E-01  CR  1.00000E-05  FE  1.00000E-05  NB  1.00000E-05
+ V   3.60110E-02  CO  1.00000E-05  MO  1.00000E-05  NI  1.00000E-05

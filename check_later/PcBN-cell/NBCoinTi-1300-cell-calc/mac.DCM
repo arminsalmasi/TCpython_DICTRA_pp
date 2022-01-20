@@ -1,0 +1,209 @@
+s-g-v 5
+go gibbs
+read g
+
+@@@@go da
+@@@@sw tcfe9
+@@@@def_sys b n ti  co
+@@@@rej ph gas
+@@@@get
+@@@@app mobfe5
+@@@@def_sys b n ti  co
+@@@@get
+
+go d-m
+s-cond glob t 0 1573; * N
+ent-region ti64
+
+ent_grid ti64 100e-6 geo 40 0.98
+
+en-ph ACTIVE ti64 mat  bcc_a2#1
+en-ph ACTIVE ti64 sph  hcp_a3#1
+en-ph ACTIVE ti64 sph  HCP_A3#2
+en-ph ACTIVE ti64 sph  fcc_a1#1
+en-ph ACTIVE ti64 sph  fcc_a1#2
+en-ph ACTIVE ti64 sph  liquid#1  
+en-ph ACTIVE ti64 sph  MB_B27#1
+en-ph ACTIVE ti64 sph  MB2_C32#1
+en-ph ACTIVE ti64 sph  Ti2N#1   
+
+en-com ti64 bcc_a2#1 ti w-f
+b  lin 1.0E-5  ,
+co lin 1.0E-5  ,
+n  lin 1.0E-5  , 
+
+ent-mob-est  fcc_a1 n   1e-25;
+ent-mob-est  fcc_a1 ti  1e-25;
+ent-mob-est  fcc_a1 b   1e-25;
+ent-mob-est  fcc_a1 co  1e-25;
+
+
+create ,,,,,,
+ent-reg tin
+ent_grid tin 0.4e-6 lin 4   
+
+en-ph active tin mat  fcc_a1#1 
+en-ph active tin sph  fcc_a1#2 
+en-ph active tin sph  BCC_a2#1 
+en-ph active tin sph  liquid#1
+en-ph active tin sph  liquid#2
+en-ph active tin sph  Ti2N#1
+en-ph ACTIVE tin sph  HCP_A3#2
+en-ph ACTIVE tin sph  HCP_A3#1
+en-ph ACTIVE tin sph  MB_B27#1
+en-ph ACTIVE tin sph  MB2_C32#1
+
+
+ent-comp  tin fcc_a1#1 ti m-f 
+b  lin 1.0E-5  ,
+co lin 1.0E-5  ,
+n  lin 3.30E-1 , 
+
+ent-mob-est  fcc_a1 n   1e-25;
+ent-mob-est  fcc_a1 ti  1e-25;
+ent-mob-est  fcc_a1 b   1e-25;
+ent-mob-est  fcc_a1 co  1e-25;
+
+@@Tool
+set_cond 
+bo
+lower
+gas
+ac 0 1.6521E-05; * N
+ac 0 1.1630E-03; * N
+ac 0 9.4301E-06; * N
+ac 0 1.5025E-10; * N
+
+ut
+NO
+yes
+NO
+NO
+no
+No
+yes
+No
+No
+No
+YES
+0.0001   
+yes
+no
+no
+no
+no
+no
+no
+no
+
+set_sim_cond
+0
+1
+2
+auto
+activ
+yes
+yes
+auto
+2
+no
+yes
+no
+
+ho
+YES
+n
+yes
+1e-3
+YES
+10000
+LOG
+5000
+yes
+no
+YES
+
+@@adv
+@@solve
+@@yes
+
+
+se-si-Ti 600  y , 1e-6 1e-20,,,,,,,,,,,
+adv ch y n 3 y no
+set-log 2
+
+save res yes
+sim
+
+
+set-inter
+@@@@#Tool
+@@X(TI)=1E-5, N=1, P=1E5, T=1273, X(N)-X(B)=0, X(CO)=0.15
+@@@@Component               Moles       W-Fraction  Activity   Potential  Ref.stat
+@@@@B                       4.8208E-01  3.7025E-01 8.6315E-05 -9.9043E+04 SER     
+@@@@CO                      3.5828E-02  1.5000E-01 2.3880E-03 -6.3901E+04 SER     
+@@@@N                       4.8208E-01  4.7971E-01 5.8675E-08 -1.7624E+05 SER     
+@@@@TI                      1.0000E-05  3.4015E-05 1.5352E-10 -2.3918E+05 SER     
+@@@@BN_B4                       Status ENTERED     Driving force  0.0000E+00
+@@@@Moles 9.6415E-01, Mass 1.1964E+01, Volume fraction 9.5591E-01  Mass fractions:
+@@@@N   5.64389E-01  B   4.35611E-01  TI  0.00000E+00  CO  0.00000E+00
+@@@@FCC_A1#1                    Status ENTERED     Driving force  0.0000E+00
+@@@@Moles 3.5838E-02, Mass 2.1116E+00, Volume fraction 4.4071E-02  Mass fractions:
+@@@@CO  9.99898E-01  TI  6.54782E-05  B   3.64455E-05  N   4.32738E-08
+@@@@FCC_A1#2                    Status ENTERED     Driving force  0.0000E+00
+@@@@Moles 1.4224E-05, Mass 4.4015E-04, Volume fraction 1.4711E-05  Mass fractions:
+@@@@TI  7.73669E-01  N   2.26330E-01  B   3.49541E-07  CO  1.41469E-07
+@@X(TI)=1E-5, N=1, P=1E5, T=1473, X(N)-X(B)=0, X(CO)=0.15
+@@Component               Moles       W-Fraction  Activity   Potential  Ref.stat
+@@B                       4.2499E-01  2.3698E-01 1.3567E-05 -1.3727E+05 SER     
+@@CO                      1.5000E-01  4.5595E-01 1.4678E-03 -7.9901E+04 SER     
+@@N                       4.2499E-01  3.0704E-01 4.3900E-06 -1.5108E+05 SER     
+@@TI                      1.0000E-05  2.4696E-05 7.7526E-11 -2.8512E+05 SER     
+@@BN_HP4                      Status ENTERED     Driving force  0.0000E+00
+@@Moles 8.4997E-01, Mass 1.0547E+01, Volume fraction 8.1967E-01  Mass fractions:
+@@N   5.64389E-01  B   4.35611E-01  TI  0.00000E+00  CO  0.00000E+00
+@@FCC_A1#2                    Status ENTERED     Driving force  0.0000E+00
+@@Moles 1.5002E-01, Mass 8.8403E+00, Volume fraction 1.8031E-01  Mass fractions:
+@@CO  9.99962E-01  TI  1.57976E-05  B   1.45491E-05  N   7.62688E-06
+@@FCC_A1#1                    Status ENTERED     Driving force  0.0000E+00
+@@Moles 1.4167E-05, Mass 4.3837E-04, Volume fraction 1.4224E-05  Mass fractions:
+@@TI  7.73649E-01  N   2.26330E-01  CO  2.06566E-05  B   1.68037E-08
+@@Conditions:
+@@X(TI)=1E-5, N=1, P=1E5, T=1573, X(N)-X(B)=0, X(CO)=0.15
+@@Component               Moles       W-Fraction  Activity   Potential  Ref.stat
+@@B                       4.2499E-01  2.3698E-01 1.6521E-05 -1.4401E+05 SER     
+@@CO                      1.5000E-01  4.5595E-01 1.1630E-03 -8.8370E+04 SER     
+@@N                       4.2499E-01  3.0704E-01 9.4301E-06 -1.5134E+05 SER     
+@@TI                      1.0000E-05  2.4696E-05 1.5025E-10 -2.9582E+05 SER     
+@@BN_HP4                      Status ENTERED     Driving force  0.0000E+00
+@@Moles 8.4995E-01, Mass 1.0547E+01, Volume fraction 8.1957E-01  Mass fractions:
+@@N   5.64389E-01  B   4.35611E-01  TI  0.00000E+00  CO  0.00000E+00
+@@FCC_A1#2                    Status ENTERED     Driving force  0.0000E+00
+@@Moles 1.5004E-01, Mass 8.8405E+00, Volume fraction 1.8042E-01  Mass fractions:
+@@CO  9.99934E-01  B   2.44700E-05  N   2.17541E-05  TI  2.01501E-05
+@@FCC_A1#1                    Status ENTERED     Driving force  0.0000E+00
+@@Moles 1.2560E-05, Mass 3.8865E-04, Volume fraction 1.2597E-05  Mass fractions:
+@@TI  7.73613E-01  N   2.26328E-01  CO  5.84115E-05  B   3.41054E-08
+@@@@#Ti
+@@@@N=1, P=1E5, T=1273, X(N)=1E-5, X(B)=1E-5, X(CO)=1E-5
+@@@@Component               Moles       W-Fraction  Activity   Potential  Ref.stat
+@@@@B                       1.0000E-05  2.2580E-06 3.8906E-09 -2.0496E+05 SER     
+@@@@CO                      1.0000E-05  1.2309E-05 7.7486E-11 -2.4641E+05 SER     
+@@@@N                       1.0000E-05  2.9255E-06 5.2920E-21 -4.9416E+05 SER     
+@@@@TI                      9.9997E-01  9.9998E-01 2.3222E-03 -6.4197E+04 SER     
+@@@@BCC_A2                      Status ENTERED     Driving force  0.0000E+00
+@@@@Moles 1.0000E+00, Mass 4.7879E+01, Volume fraction 1.0000E+00  Mass fractions:
+@@@@TI  9.99983E-01  CO  1.23086E-05  N   2.92548E-06  B   2.25796E-06
+@@
+@@go da
+@@sw tcfe9
+@@def-sys n b co ti 
+@@rej ph gas
+@@get
+@@go poly
+@@s-c  x(ti)=1e-5 N=1, P=1E5, T=1473, X(N)-X(B)=0, X(CO)=0.15
+@@c-e
+@@l-e ,,,,,
+@@s-c x(ti)=1e-5  N=1, P=1E5, T=1573, X(N)-X(B)=0, X(CO)=0.15
+@@c-e
+@@l-e ,,,,,
