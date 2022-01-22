@@ -85,6 +85,12 @@ def get_path():
             flag = False
     os.chdir(open_file)
     return os.getcwd()
+#********************************************************************************************
+def get_timeStamp(times):
+    time1 = float(input('Time to plot/{}/timesteps/{}/:'.format(times[-1],len(times))))
+    if time1>=0 and time1 <=times[-1]:
+        tStamp, nearestTime = find_nearest(times,time1)
+    return tStamp, nearestTime
 #********************************************************************************************                      
 def find_nearest(array, value):
     '''find index with vlaue closest to input value
@@ -144,6 +150,21 @@ def get_values_of_timeStamp(*argv):
     return (timeStamp_mfs, timeStamp_npms[:, :len(timeStamp_npms)],
             timeStamp_mus, timeStamp_points, timeStamp_phnames)
 #********************************************************************************************
+def calculate_u_fractions(*argv):
+    mf = argv[0]
+    intsub = argv[1]
+    elnames =  argv[2]
+    subindices = list(np.arange(len(elnames)))
+    for idx in intsub: 
+        subindices.pop(idx)
+    subindices_sum = np.sum(mf[:,subindices],axis=1)
+    uf_dict = {}
+    uf = np.zeros_like(mf)
+    for nel,el in enumerate(elnames):
+        uf_dict[el] = mf[:,nel]/subindices_sum[:]
+        uf[:,nel] = mf[:,nel]/subindices_sum[:]
+    return uf,uf_dict
+#********************************************************************************************
 def tccalc(*argv):
     '''input: Calculate single equilibrium point by point with input condition
             0-timeStamp_values(
@@ -158,6 +179,7 @@ def tccalc(*argv):
             4-T
             5-elnames
             6-pth
+            7-poly3file
         output:
             0-stablePhaeses_in_points,
             1-npms_in_points,
@@ -177,23 +199,22 @@ def tccalc(*argv):
         T = argv[4]
         elnames = argv[5]
         pth = argv[6]
-        print(pth)
+        poly3_file=argv[7]
     except:
         print('error in calcualtion input data')
     else:
         print('calculating thermodynaics')
     with TCPython() as start:
-        #poly = start.set_cache_folder( "./_cache2").select_database_and_elements(database, elnames).get_system().with_single_equilibrium_calculation()
-        poly = start.select_database_and_elements(database, elnames).get_system().with_single_equilibrium_calculation()
-        if os.path.isfile('{}/p.POLY3'.format(pth)):
+        if poly3_file and os.path.isfile('{}/p.POLY3'.format(pth)):
+            poly = start.select_database_and_elements(database, elnames).get_system().with_single_equilibrium_calculation()
             poly.run_poly_command('read {}/p.POLY3'.format(pth))
-            poly.run_poly_command('list-status ,cps,')
+            #poly.run_poly_command('list-status ,cps,')
             poly.remove_all_conditions()
             poly.set_condition('N',1)
             poly.set_condition('P',1e5)
         else:
-            print('poly3 file is absent')
-            sys.exit()
+            print('calculation without poly3 file')
+            poly = start.set_cache_folder( "./_cache2").select_database_and_elements(database, elnames).get_system().with_single_equilibrium_calculation()
         if len(phases_to_suspend)>0:
             for phase in phases_to_suspend:
                 poly.set_phase_to_suspended(phase)
@@ -231,6 +252,10 @@ def tccalc(*argv):
     return (stablePhaeses_in_points, npms_in_points, vpvs_in_points, phX_in_points,
             activities_with_ref, activities, tcCalculated_mus, tcCalculated_ws)
 #********************************************************************************************
+
+        
+#********************************************************************************************
+
 def trim_tcCalculated_values(*argv):
     '''input:
             0-timeStamp_values(
@@ -388,6 +413,127 @@ def correct_phase_indices(*argv):
                                     new_phX_in_points[phase][point] = [0]*len(elnames) 
                                     new_npms[phase][point] = 0
     return(new_phX_in_points,new_npms)
+#********************************************************************************************
+def ph_namechange(dictionary,name_pairs):
+    for name in name_pairs:
+        if name[0] in dictionary.keys():
+            dictionary[name[1]] = dictionary[name[0]]
+            del dictionary[name[0]]
+    return dictionary
+#********************************************************************************************
+def add_phs_compositionDets_DICTRA(*argv):
+    npms = argv[0][1]
+    phs_names = argv[0][4]
+    npms_dict = {}
+    for nph,key in enumerate(phs_names):
+        npms_dict[key]=npms[:,nph]
+    phs_without_Csets =[]
+    keys = [key for key in npms_dict.keys()]
+    for key in keys:
+        if '#1' in key:
+            tmp = key.split('#')
+            phs_without_Csets.append(tmp[0])
+    for ph in phs_without_Csets:
+        for i in np.arange(2,10):
+            for key in keys:
+                 if key == ph+'#{}'.format(i):
+                    npms_dict[ph+'#1'] += npms_dict[ph+'#{}'.format(i)]
+                    npms_dict.pop(ph+'#{}'.format(i))
+    keys = [key for key in npms_dict.keys()]
+    for i in np.arange(len(keys)):
+        for j in np.arange(i,len(keys)):
+             if sorted(keys[i]) == sorted(keys[j]):
+                if keys[i] is not keys[j]:
+                    print(keys[i],keys[j])
+                    npms_dict[keys[i]] += npms_dict[keys[j]]
+                    npms_dict.pop(keys[j])
+    return npms_dict  
+#********************************************************************************************
+def add_composition_sets(*argv): 
+    npms_dict = copy.deepcopy(argv[0])
+    keys = [key for key in npms_dict.keys()]
+    phs_without_Csets =[]
+    for key in keys:
+        if '#1' in key:
+            tmp = key.split('#')
+            phs_without_Csets.append(tmp[0])
+    for ph in phs_without_Csets:
+        for i in np.arange(2,10):
+            for key in keys:
+                 if key == ph+'#{}'.format(i):
+                    npms_dict[ph+'#1'] += npms_dict[ph+'#{}'.format(i)]
+                    npms_dict.pop(ph+'#{}'.format(i))
+    keys = [key for key in npms_dict.keys()]
+    for i in np.arange(len(keys)):
+        for j in np.arange(i,len(keys)):
+             if sorted(keys[i]) == sorted(keys[j]):
+                if keys[i] is not keys[j]:
+                    print(keys[i],keys[j])
+                    npms_dict[keys[i]] += npms_dict[keys[j]]
+                    npms_dict.pop(keys[j])
+    print(npms_dict.keys())
+    return npms_dict
+#********************************************************************************************
+def plot_dict(*argv):
+    '''input: x,y,legend,title,xlims '''
+    x = argv[0]
+    y = argv[1]
+    legend = argv[2]
+    title = argv[3]
+    xlims = argv[4]
+    plt.figure(figsize=[8,6])
+    for key in legend:
+        plt.plot(x,y[key])
+    plt.legend(legend)
+    plt.xlim([xlims[0],xlims[1]])
+    plt.title(title)
+#********************************************************************************************
+def plot_list(*argv):
+    '''input: x,y,legend,title,xlims '''
+    x = argv[0]
+    y = argv[1]
+    legend = argv[2]
+    title = argv[3]
+    xlims = argv[4]
+    plt.figure(figsize=[8,6])
+    for key in legend:
+        plt.plot(x,y)
+    plt.legend(legend)
+    plt.xlim([xlims[0],xlims[1]])
+    plt.title(title)
+#********************************************************************************************
+
+# def get_lims_gui(points):
+#     master = ttk.Tk()
+# #     def get_entry_fields():
+# #         print("xlim1: %s\nxlim2: %s" % (e1.get(), e2.get()))    
+#     ttk.Label(master, text = "xlim1 min {:3.1f} or -1".format(points[0])).grid(row = 0)
+#     ttk.Label(master, text = "xlim2 max {:3.1f} or -1".format(points[-1])).grid(row = 1)
+#     e1 = ttk.Entry(master)
+#     e2 = ttk.Entry(master)
+#     e1.grid(row = 0, column = 1)
+#     e2.grid(row = 1, column = 1)
+#     ttk.Button(master, text = 'OK', command = master.quit).grid(row = 3, column = 0, sticky = ttk.W, pady = 4)
+#     #tk.Button(master, text = 'Get', command = get_entry_fields).grid(row = 3, column = 1, sticky = tk.W, pady = 4)
+#     ttk.mainloop()
+#     master.withdraw()
+#     lim1 = int(e1.get())
+#     lim2 = int(e2.get())
+#     return lim1, lim2
+# #********************************************************************************************
+# def set_xlim(points1, points3, lim1 = -2, lim2 = -2):
+#     '''Setting plot xlimits, L < 0 : domain xlimits'''
+#     if lim1 != -2 and lim2 != -2:
+#         xlim1, xlim2 = lim1, lim2
+#     else:
+#         if   max(points1[-1], points3[-1]) > 700: xlim1, xlim2 = 350, 450
+#         elif max(points1[-1], points3[-1]) <= 400 and max(points1[-1], points3[-1]) >= 200 : xlim1, xlim2 = 150, 250
+#         elif max(points1[-1], points3[-1]) >= 250 and max(points1[-1], points3[-1]) <= 360 : xlim1, xlim2 = 280, max(points1[-1], points3[-1])
+#         elif max(points1[-1], points3[-1]) <= 150 and max(points1[-1], points3[-1]) >= 100 : xlim1, xlim2 = 80, max(points1[-1], points3[-1])
+#         elif max(points1[-1], points3[-1]) <= 100 : xlim1, xlim2 = 40, max(points1[-1], points3[-1])
+#         else : xlim1, xlim2 = -1, -1
+#     return xlim1, xlim2
+# x1,x2 = get_lims_gui(tStamp_vals[3])
 #********************************************************************************************
 def del_pngs():
     '''Deleting png files'''
