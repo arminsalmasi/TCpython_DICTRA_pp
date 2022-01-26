@@ -21,53 +21,47 @@ def get_values_from_textfiles():
     '''Reads all values from a given path, 
     input:
         path(optional)
-    output: 
-        path, 
-        mfs, 
-        elnames, 
-        points, 
-        times, 
-        n_points, 
-        npms, 
-        phnames, 
-        mus, 
-        T, 
-        subidx
+    output:dict{path,all_mfs,elnames,all_points,times,n_points,DICTRA_all_npms, 
+                 DICTRA_phnames,DICTRA_all_mus, T, interstitials, substitutionals}
     '''
-    pth = get_path()
-    print(pth)
-    mfs = np.loadtxt('MOLE_FRACTIONS.TXT', dtype = float)
-    elnames = np.loadtxt('EL_NAMES.TXT', dtype = str)
-    points = np.loadtxt('VOLUME_MIDPOINTS.TXT', dtype = float)
-    times = np.loadtxt('TIME.TXT', dtype = float)
-    n_points = np.loadtxt('VOLUMES_PER_REGION.TXT', dtype = float)
-    npms = np.loadtxt('PHASE_FRACTIONS.TXT', dtype = float)
+    data = {}
+    data['path'] = get_path()
+    data['all_mfs'] = np.loadtxt('MOLE_FRACTIONS.TXT', dtype = float)
+    data['elnames'] = np.loadtxt('EL_NAMES.TXT', dtype = str)
+    data['all_points'] = np.loadtxt('VOLUME_MIDPOINTS.TXT', dtype = float)
+    data['times'] = np.loadtxt('TIME.TXT', dtype = float)
+    data['n_points'] = np.loadtxt('VOLUMES_PER_REGION.TXT', dtype = float)
+    data['DICTRA_all_npms'] = np.loadtxt('PHASE_FRACTIONS.TXT', dtype = float)
     phnames = []
     with open('PH_NAMES.TXT', 'r')as f:
         for line in f:
             phnames.append(line.strip())
-    phnames = np.array(phnames)
-    mus = np.loadtxt('CHEMICAL_POTENTIALS.TXT', dtype = float)
+    data['DICTRA_phnames'] = np.array(phnames)
+    data['DICTRA_all_mus'] = np.loadtxt('CHEMICAL_POTENTIALS.TXT', dtype = float)
     #Loading the data from txt files'''
-    T = np.loadtxt('T.DAT', dtype = int)+273
-    subidx = []
-    if 'N' in elnames:
-        Nidx = np.where(elnames == 'N')[0]
-        subidx.append(Nidx[0])
-    if 'C' in elnames:
-        Cidx = np.where(elnames == 'C')[0]
-        subidx.append(Cidx[0])
-    if 'H' in elnames:
-        Hidx = np.where(elnames == 'H')[0]
-        subidx.append(Hidx[0])
-    if 'O' in elnames:
-        Oidx = np.where(elnames == 'O')[0]
-        subidx.append(Oidx[0])
-    if 'VA' in elnames:
-        VAidx = np.where(elnames == 'VA')[0]
-        subidx.append(VAidx[0])
-    return (pth, mfs, elnames, points, times, 
-            n_points, npms, phnames, mus, T, subidx)
+    data['T'] = np.loadtxt('T.DAT', dtype = int)+273
+    int_idx = []
+    if 'N' in data['elnames']:
+        Nidx = np.where(data['elnames'] == 'N')[0]
+        int_idx.append(Nidx[0])
+    if 'C' in data['elnames']:
+        Cidx = np.where(data['elnames'] == 'C')[0]
+        int_idx.append(Cidx[0])
+    if 'H' in data['elnames']:
+        Hidx = np.where(data['elnames'] == 'H')[0]
+        int_idx.append(Hidx[0])
+    if 'O' in data['elnames']:
+        Oidx = np.where(data['elnames'] == 'O')[0]
+        int_idx.append(Oidx[0])
+    if 'VA' in data['elnames']:
+        VAidx = np.where(data['elnames'] == 'VA')[0]
+        int_idx.append(VAidx[0])
+    sub_idx = list(np.arange(len(data['elnames'])))
+    data['interstitials'] = [data['elnames'][int_idx],int_idx]
+    for idx in data['interstitials'][1]: 
+        sub_idx.pop(idx)
+    data['substitutionals'] = [data['elnames'][sub_idx],sub_idx]
+    return data
 #********************************************************************************************
 def get_path():
     '''change path to the designated folder, root is users home
@@ -101,69 +95,82 @@ def find_nearest(array, value):
     idx = (np.abs(array - value)).argmin()
     return idx,array[idx]                      
 #********************************************************************************************                      
-def get_values_of_timeStamp(*argv):
-    '''get value of a given timestamp
-    input:
-        0-values(
-            0-path, 
-            1-mfs, 
-            2-elnames, 
-            3-points, 
-            4-times, 
-            5-n_points, 
-            6-npms, 
-            7-phnames, 
-            8-mus, 
-            9-T, 
-            10-subidx )
-        1-timeStamp
-    output:
-        0-tStamp_vals
-            0-mfs,
-            1-npms,
-            2-mus, 
-            3-points,
-            4-phnames_of_timeStamp'''
-    timeStamp = argv[1]
-    mfs = argv[0][1]
-    elnames = argv[0][2]
-    points = argv[0][3]
-    times = argv[0][4]
-    n_points = argv[0][5]
-    npms = argv[0][6]
-    phnames = argv[0][7]
-    mus = argv[0][8]
-    '''gets molefractions, chemicalpotentials, phasefractions, volumemidpoints and time of the timeindex
-    removes ZZDICTRA from phasenames'''
-    timeStamp_points = points[int(np.sum(n_points[:timeStamp])):int(np.sum(n_points[:timeStamp+1]))]*1e6    
-    idx1 = int(np.sum(n_points[:timeStamp]))*int(len(phnames))
-    idx2 = int(np.sum(n_points[:timeStamp+1]))*int(len(phnames))
-    timeStamp_npms = npms[idx1:idx2].reshape((-1, int(len(phnames))))
-    if 'ZZDICTRA_GHOST' in phnames[-1]:
-        timeStamp_phnames = deepcopy(phnames[:-1])
-    else:
-        timeStamp_phnames = deepcopy(phnames)
-    idx1 = int(np.sum(n_points[:timeStamp]))*len(elnames)
-    idx2 = int(np.sum(n_points[:timeStamp+1]))*len(elnames)
-    timeStamp_mfs = mfs[idx1:idx2].reshape((-1, len(elnames)))
-    timeStamp_mus = mus[idx1:idx2].reshape((-1, len(elnames)))
-    return (timeStamp_mfs, timeStamp_npms[:, :len(timeStamp_npms)],
-            timeStamp_mus, timeStamp_points, timeStamp_phnames)
-#********************************************************************************************
 def calculate_u_fractions(*argv):
     mf = argv[0]
-    intsub = argv[1]
+    sub_idx = argv[1]
     elnames =  argv[2]
-    subindices = list(np.arange(len(elnames)))
-    for idx in intsub: 
-        subindices.pop(idx)
-    subindices_sum = np.sum(mf[:,subindices],axis=1)
-    uf_dict = {}
-    uf = np.zeros_like(mf)
+    sub_sum = np.sum(mf[:,sub_idx],axis=1)
+    #uf_dict = {}
+    uf = []
     for nel,el in enumerate(elnames):
-        uf_dict[el] = mf[:,nel]/subindices_sum[:]
-        uf[:,nel] = mf[:,nel]/subindices_sum[:]
-    return uf,uf_dict
+        #uf_dict[el] = mf[:,nel]/sub_sum[:]
+        uf.append(mf[:,nel]/sub_sum[:]) 
+    return np.array(uf)
+#********************************************************************************************
+#def get_values_of_timeStamp(*argv):
+#    '''get value of a given timestamp
+#    input: Stamp,all_mfs,elnames,all_points,n_points,all_npms,DICTRA_phnames,substitutionals,
+#    output: dict{'tStamp_mfs','tStamp_DICTRA_npms','tStamp_DICTRA_mus','tStamp_points','tStamp_DICTRA_phnames'}
+#    '''
+#    tStamp, mfs, elnames, points, n_points, npms, phnames, mus, subs = argv   
+#    dict = {}
+#    '''gets molefractions, chemicalpotentials, phasefractions, volumemidpoints and time of the timeindex
+#    removes ZZDICTRA from phasenames, calculate u-fractions'''
+#    dict['tStamp_points'] = points[int(np.sum(n_points[:tStamp])):int(np.sum(n_points[:tStamp+1]))]*1e6    
+#    idx1 = int(np.sum(n_points[:tStamp]))*int(len(phnames))
+#    idx2 = int(np.sum(n_points[:tStamp+1]))*int(len(phnames))
+#    dict['tStamp_DICTRA_npms'] = npms[idx1:idx2].reshape((-1, int(len(phnames))))
+#    if 'ZZDICTRA_GHOST' in phnames[-1]:
+#        dict['tStamp_DICTRA_phnames'] = deepcopy(phnames[:-1])
+#    else:
+#        dict['tStamp_DICTRA_phnames'] = deepcopy(phnames)
+#    idx1 = int(np.sum(n_points[:tStamp]))*len(elnames)
+#    idx2 = int(np.sum(n_points[:tStamp+1]))*len(elnames)
+#    dict['tStamp_mfs'] = mfs[idx1:idx2].reshape((-1, len(elnames)))
+#    dict['tStamp_mus'] = mus[idx1:idx2].reshape((-1, len(elnames)))
+#    dict['tStamp_ufs'] = calculate_u_fractions(dict['tStamp_mfs'],subs[1],elnames) 
+#    return dict
+#********************************************************************************************
+def get_tStamp_vals(dict_input):
+    '''get value of a given timestamp
+    input: dict{all_values} 
+    output: dict{'tStamp_mfs','tStamp_DICTRA_npms','tStamp_DICTRA_mus','tStamp_points','tStamp_DICTRA_phnames'}
+    '''
+    dict = copy.deepcopy(dict_input)
+    tStamp = dict['tStamp'][0]
+    mfs =dict['all_mfs']
+    elnames = dict['elnames']
+    points = dict['all_points']
+    n_points =dict['n_points']
+    npms =dict['DICTRA_all_npms']
+    phnames = dict['DICTRA_phnames']
+    mus = dict['DICTRA_all_mus']
+    subs =dict['substitutionals']   
+    '''gets molefractions, chemicalpotentials, phasefractions, volumemidpoints and time of the timeindex
+    removes ZZDICTRA from phasenames, calculate u-fractions'''
+    dict['tStamp_points'] = points[int(np.sum(n_points[:tStamp])):int(np.sum(n_points[:tStamp+1]))]*1e6    
+    idx1 = int(np.sum(n_points[:tStamp]))*int(len(phnames))
+    idx2 = int(np.sum(n_points[:tStamp+1]))*int(len(phnames))
+    dict['tStamp_DICTRA_npms'] = npms[idx1:idx2].reshape((-1, int(len(phnames))))
+    if 'ZZDICTRA_GHOST' in phnames[-1]:
+        dict['tStamp_DICTRA_phnames'] = deepcopy(phnames[:-1])
+    else:
+        dict['tStamp_DICTRA_phnames'] = deepcopy(phnames)
+    idx1 = int(np.sum(n_points[:tStamp]))*len(elnames)
+    idx2 = int(np.sum(n_points[:tStamp+1]))*len(elnames)
+    dict['tStamp_mfs'] = mfs[idx1:idx2].reshape((-1, len(elnames)))
+    dict['tStamp_mus'] = mus[idx1:idx2].reshape((-1, len(elnames)))
+    dict['tStamp_ufs'] = calculate_u_fractions(dict['tStamp_mfs'],subs[1],elnames) 
+    #dict.pop('all_mfs')
+    #dict.pop('all_points')
+    #dict.pop('times')
+    #dict.pop('n_points')
+    #dict.pop('DICTRA_all_npms') 
+    #dict.pop('DICTRA_phnames')
+    #dict.pop('DICTRA_all_mus') 
+    for key in ['all_mfs','all_points','times','n_points','DICTRA_all_npms' ,'DICTRA_phnames','DICTRA_all_mus']:
+        dict.pop(key) 
+    return dict
 #********************************************************************************************
 def tccalc(*argv):
     '''input: Calculate single equilibrium point by point with input condition
@@ -282,7 +289,7 @@ def trim_tcCalculated_values(*argv):
             3-vpvs_dict
             4-activities_with_ref_dict
             5-activities_dict
-            6-subidx
+            6-int_idx
             7-mus_dict
             8-tcCalculated_mus_dict
             9-ws_dict
@@ -302,7 +309,7 @@ def trim_tcCalculated_values(*argv):
         tcCalculated_mus = argv[1][6]
         ws = argv[1][7]
         elnames = argv[2]
-        subidx = argv[3]
+        int_idx = argv[3]
     except:
         print('input error')
     else:
