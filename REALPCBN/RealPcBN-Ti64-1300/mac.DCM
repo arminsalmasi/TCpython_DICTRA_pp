@@ -1,16 +1,16 @@
 s-g-v 5
 
-@@go gibbs
-@@read g
+go gibbs
+read g
 
-go da
-sw tcfe9
-def-sys AL  B   CO  CR  FE  MO  N   NB  NI  TI  V   W
-rej ph gas
-get 
-app mobfe5
-def-sys AL  B   CO  CR  FE  MO  N   NB  NI  TI  V   W
-get
+@@go da
+@@sw tcfe9
+@@def-sys AL  B   CO  CR  FE  MO  N   NB  NI  TI  V   W
+@@rej ph gas
+@@get 
+@@app mobfe5
+@@def-sys AL  B   CO  CR  FE  MO  N   NB  NI  TI  V   W
+@@get
 
 
 
@@ -20,6 +20,8 @@ ent-region ti64
 ent_grid ti64 500e-6 geo 100 0.98
 
 en-ph ACTIVE ti64 mat bcc_a2#1
+en-ph ACTIVE ti64 sph  bcc_a2#2
+en-ph ACTIVE ti64 sph  bcc_a2#3
 en-ph active ti64 sph BN_HP4                      
 en-ph active ti64 sph FCC_A1#1                    
 en-ph active ti64 sph FCC_A1#2                    
@@ -28,6 +30,8 @@ en-ph active ti64 sph HCP_A3#1
 @@en-ph active ti64 sph HCP_A3#2
 en-ph active ti64 sph TI2N#1 
 en-ph active ti64 sph MB_B33#1
+
+
 
 @@Ti64
 @@    Moles       W-Fraction      Activity        Moles       W-Fraction  Activity

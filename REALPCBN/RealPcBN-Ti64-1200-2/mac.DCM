@@ -1,16 +1,16 @@
 s-g-v 5
 
-@@go gibbs
-@@read g
+go gibbs
+read g
 
-go da
-sw tcfe9
-def-sys AL  B   CO  CR  FE  MO  N   NB  NI  TI  V   W
-rej ph gas
-get 
-app mobfe5
-def-sys AL  B   CO  CR  FE  MO  N   NB  NI  TI  V   W
-get
+@@go da
+@@sw tcfe9
+@@def-sys AL  B   CO  CR  FE  MO  N   NB  NI  TI  V   W
+@@rej ph gas
+@@get 
+@@app mobfe5
+@@def-sys AL  B   CO  CR  FE  MO  N   NB  NI  TI  V   W
+@@get
 
 
 
@@ -25,9 +25,26 @@ en-ph active ti64 sph FCC_A1#1
 en-ph active ti64 sph FCC_A1#2                    
 en-ph active ti64 sph ALN                         
 en-ph active ti64 sph HCP_A3#1
-@@en-ph active ti64 sph HCP_A3#2
+en-ph active ti64 sph HCP_A3#2
+en-ph active ti64 sph HCP_A3#3
 en-ph active ti64 sph TI2N#1 
+en-ph active ti64 sph MB_B27  
+en-ph active ti64 sph NI3TI   
+en-ph active ti64 sph MB2_C32 
+en-ph active ti64 sph CBCC_A12
+
+en-ph active ti64 sph MB_B33#2
 en-ph active ti64 sph MB_B33#1
+en-ph active ti64 sph BCC_A2#6
+en-ph active ti64 sph BCC_A2#5
+en-ph active ti64 sph BCC_A2#4
+en-ph active ti64 sph BCC_A2#3
+en-ph active ti64 sph BCC_A2#2
+en-ph active ti64 sph LIQUID#2
+en-ph active ti64 sph LIQUID#1
+en-ph active ti64 sph LIQUID#3
+
+
 
 @@Ti64
 @@    Moles       W-Fraction      Activity        Moles       W-Fraction  Activity
